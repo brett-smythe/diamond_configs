@@ -22,18 +22,22 @@ class InternsTwitterTimelineCollector(diamond.collector.Collector):
             timeline_req_line = 'Making twitter timeline request'
             date_format = '%Y-%m-%d %H:%M:%S'
             valid_requests = 0
-            with open(log_path) as inf:
-                for line in inf:
-                    line_data = line.split('-')
+            try:
+                with open(log_path) as inf:
+                    for line in inf:
+                        line_data = line.split('-')
 
-                    time_data = line_data[0:3]
-                    timestamp = '-'.join(time_data).split(',')[0]
-                    log_datetime = datetime.strptime(timestamp, date_format)
-                    if log_datetime < oldest_datetime:
-                        continue
-                    log_msg = line_data[-1].strip()
-                    if log_msg == timeline_req_line:
-                        valid_requests += 1
+                        time_data = line_data[0:3]
+                        timestamp = '-'.join(time_data).split(',')[0]
+                        log_datetime = datetime.strptime(timestamp, date_format)
+                        if log_datetime < oldest_datetime:
+                            continue
+                        log_msg = line_data[-1].strip()
+                        if log_msg == timeline_req_line:
+                            valid_requests += 1
+            except IOError:
+                # Log file doesn't exist
+                pass
             return valid_requests
 
         def is_dst_currently():
