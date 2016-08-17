@@ -12,8 +12,8 @@ class InternsTwitterTimelineCollector(diamond.collector.Collector):
 
     def collect(self):
         """Collect twitter API timeline request metrics"""
-        interns_service_logs_dir = '/var/log/interns-service/'
-        interns_base_log_name = 'tasks.log'
+        interns_service_logs_dir = '/var/log/interns-twitter/'
+        interns_base_log_name = 'worker.log'
 
         def parse_log(log_path, oldest_datetime):
             """When given a log at log_path, parse the log for timeline
